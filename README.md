@@ -6,25 +6,25 @@ This project focuses on exploring and analyzing business data using Power BI and
 
 ## Objectives
 **1.Data Exploration:**
--Retrieve and filter data based on specific conditions such as customer names, product categories, dates, and more.
--Perform cross-joins between tables to extract meaningful information.
+- Retrieve and filter data based on specific conditions such as customer names, product categories, dates, and more.
+- Perform cross-joins between tables to extract meaningful information.
 **2.Sales and Product Analysis:**
--Analyze sales data to calculate metrics like total sales, average sales, and product quantities.
--Identify top-performing products, suppliers, and categories based on sales volume.
+- Analyze sales data to calculate metrics like total sales, average sales, and product quantities.
+- Identify top-performing products, suppliers, and categories based on sales volume.
 **3.Customer Insights:**
--Segment customers based on criteria like order count, location, and titles.
--Track customer behavior, such as frequency of purchases or most purchased products.
+- Segment customers based on criteria like order count, location, and titles.
+- Track customer behavior, such as frequency of purchases or most purchased products.
 **4.Employee Performance:**
--Determine the most productive employees based on the number of orders handled.
--Analyze employee contributions to sales performance.
+- Determine the most productive employees based on the number of orders handled.
+- Analyze employee contributions to sales performance.
 **5.Temporal Analysis:**
--Calculate total sales by date, month, and even specific days like Sundays.
--Compare sales trends over different periods.
+- Calculate total sales by date, month, and even specific days like Sundays.
+- Compare sales trends over different periods.
 **6.Database Optimization:**
--Use aggregation and summarization techniques to improve query efficiency.
--Leverage measures and calculated columns for detailed calculations.
+- Use aggregation and summarization techniques to improve query efficiency.
+- Leverage measures and calculated columns for detailed calculations.
 **7.Real-World Business Scenarios:**
--Answer key business questions such as identifying expensive products, understanding customer preferences, and analyzing order patterns.
+- Answer key business questions such as identifying expensive products, understanding customer preferences, and analyzing order patterns.
 
 
 ## 1. Show all the orders of customer HANNA MOOS?
