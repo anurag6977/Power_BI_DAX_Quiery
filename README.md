@@ -81,3 +81,93 @@ oyeeID] && Employees[FirstName]=="Laura"),
 Employees[FirstName],Orders[OrderID]),Employees[FirstName],Orders[OrderID])
 ```
 ![image](https://github.com/user-attachments/assets/47c2af2a-a2b8-4823-92d9-0dd1257f5d9a)
+
+## 11. Show all the orderid,customername which ordered ‘Tofu’ product
+``` DAX
+EVALUATE
+GROUPBY(SELECTCOLUMNS(FILTER(CROSSJOIN(Customers,Products,Orders),Orders[CustomerID]==Custo
+mers[CustomerID] && Orders[ProductID]==Products[ProductID] && 
+Products[ProductName]=="Tofu"),"Order No",Orders[OrderID],"Customer 
+Name",Customers[ContactName]),[Order No],[Customer Name])
+```
+![image](https://github.com/user-attachments/assets/4b95e493-4491-4369-9808-e92bcd25174d)
+
+## 12. Show all the supplier names which supplies ‘Tofu’ & ‘Ipoh Coffee’
+``` DAX
+EVALUATE
+SELECTCOLUMNS(FILTER(CROSSJOIN(Products,Suppliers),Products[SupplierID]==Suppliers[Supplier
+ID] && Products[ProductName] in {"Tofu","Ipoh Coffee"}),
+Suppliers[ContactName])
+```
+![image](https://github.com/user-attachments/assets/a4b30c06-16df-4928-9596-2f78ed092ce6)
+
+## 13. List all the customers of city ‘London’ who ordered products more then one time
+``` DAX
+EVALUATE
+DISTINCT(SELECTCOLUMNS(FILTER(CROSSJOIN(Customers,Products,Orders),Orders[CustomerID]==Cust
+omers[CustomerID] && Orders[ProductID]==Products[ProductID]
+&& Customers[City]=="London" && COUNT(Products[ProductName])>1),"Customer 
+Name",Customers[ContactName]))
+```
+![image](https://github.com/user-attachments/assets/e565e601-cbc4-4a24-bf0d-042017539621)
+
+## 14. Show all the customer name & employee name having same cities
+``` DAX
+EVALUATE
+GROUPBY(SELECTCOLUMNS(FILTER(CROSSJOIN(Customers,Employees,Orders),Orders[CustomerID]==Cust
+omers[CustomerID] && Orders[EmployeeID]==Employees[EmployeeID]
+&& Customers[City]==Employees[City]),"Customers Name",Customers[ContactName],"Employees 
+Name",Employees[Full Name]),[Customers Name],[Employees Name])
+```
+![image](https://github.com/user-attachments/assets/29ac6323-2fc7-47fd-820e-1e2f796b0af0)
+
+## 15. Show all the customer who are owner of company
+``` DAX
+EVALUATE
+SELECTCOLUMNS(FILTER(Customers,Customers[ContactTitle]=="Owner"),
+"Customer Name",Customers[ContactName],"Company Name",Customers[CompanyName])
+```
+![image](https://github.com/user-attachments/assets/0acc5819-3b87-44b4-8942-5321261c7401)
+
+## 16. Show all orders which sale by employee ‘Anne’
+``` DAX
+EVALUATE
+GROUPBY(SELECTCOLUMNS(FILTER(CROSSJOIN(Employees,Orders),Orders[EmployeeID]==Employees[Empl
+oyeeID] && Employees[FirstName]=="Anne"),"Employee Name",
+Employees[Full Name],"Order No",Orders[OrderID]),[Employee Name],[Order No])
+```
+![image](https://github.com/user-attachments/assets/f8e0126f-271d-4911-9d9d-11c52bb2cc9f)
+
+## 17. Show Most productive employee of NorthwindSale
+``` DAX
+EVALUATE
+DISTINCT(SELECTCOLUMNS(FILTER(CROSSJOIN(Employees,Orders),Orders[EmployeeID]==Employees[Emp
+loyeeID] && COUNT(Orders[OrderID])>2),Employees[Full Name]))
+```
+![image](https://github.com/user-attachments/assets/112f142c-bd7f-4336-b6b1-81bd47c993e7)
+
+## 18. Show all the product sale by company ‘Tokyo Traders’
+``` DAX
+EVALUATE
+SELECTCOLUMNS(FILTER(CROSSJOIN(Suppliers,Products),Products[SupplierID]==Suppliers[Supplier
+ID] && Suppliers[CompanyName]=="Tokyo Traders")
+,"Products",Products[ProductName],"Company Name",Suppliers[CompanyName])
+```
+![image](https://github.com/user-attachments/assets/3bff7fd1-3b04-425c-9f4b-dbbdc69e1119)
+
+## 19. Show Total Sale of each Month
+``` DAX
+EVALUATE
+SUMMARIZE(Orders,'Calendar'[Month Name],"Total Sales",SUMX(Orders,Orders[_Sales]))
+```
+![image](https://github.com/user-attachments/assets/0efe88d9-e1bb-4a57-b4b6-279be89ae208)
+
+## 20. Show Total sale of each Sunday
+``` DAX
+EVALUATE
+FILTER(SUMMARIZE(Orders,'Calendar'[Day Name],"Total 
+Sales",SUMX(Orders,Orders[_Sales])),'Calendar'[Day Name]=="Sun")
+```
+![image](https://github.com/user-attachments/assets/3543ffe8-f891-439d-9222-dcacf0743591)
+
+
