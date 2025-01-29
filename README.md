@@ -170,4 +170,76 @@ Sales",SUMX(Orders,Orders[_Sales])),'Calendar'[Day Name]=="Sun")
 ```
 ![image](https://github.com/user-attachments/assets/3543ffe8-f891-439d-9222-dcacf0743591)
 
+## 21. How many current products cost less than $20?
+``` DAX
+EVALUATE
+SUMMARIZE(FILTER(Products,Products[UnitPrice]<20),"Total Products",COUNT(Products[ProductName]))
+```
+![image](https://github.com/user-attachments/assets/727aa20f-5679-4ebd-868e-592db534faf0)
+
+## 22. Which product is the most expensive?
+``` DAX
+EVALUATE
+TOPN(1,SELECTCOLUMNS(Products,Products[ProductName],Products[UnitPrice]),Products[UnitPrice],DESC)
+```
+![image](https://github.com/user-attachments/assets/a11bfeac-06b6-4483-b88a-f1f11f21022c)
+
+## 23: What is the average unit price for our products?
+``` DAX
+EVALUATE
+TOPN(1,SELECTCOLUMNS(Products,Products[ProductName],Products[UnitPrice]),Products[UnitPrice],DESC)
+```
+![image](https://github.com/user-attachments/assets/37000c46-f7ce-4e85-8ab3-b6a1b867b496)
+
+## 24: How many products are above the average unit price?
+``` DAX
+EVALUATE
+SUMMARIZE(SELECTCOLUMNS(FILTER(Products,Products[UnitPrice]>ROW("Average Price",AVERAGE(Products[UnitPrice]))),Products[ProductName]),
+"Count",COUNT(Products[ProductName]))
+```
+![image](https://github.com/user-attachments/assets/7a4f7d4c-9bb9-4d7b-882b-5cbedf693205)
+
+## 25: How many products cost between $15 and $25 (inclusive)?
+``` DAX
+EVALUATE
+SUMMARIZE(SELECTCOLUMNS(FILTER(Products,Products[UnitPrice]>15 && Products[UnitPrice]<25),
+Products[ProductName]),"Total",COUNT(Products[ProductName]))
+```
+![image](https://github.com/user-attachments/assets/1e587172-0aef-40e9-8503-64b1abe9d07c)
+
+## 26: How many orders are "single item" (only one product ordered)?
+``` DAX
+EVALUATE
+GROUPBY(FILTER(SUMMARIZE(Orders,Orders[OrderID],"Count",COUNT(Orders[OrderID])),[Count]==1),"Total Count",COUNTX(CURRENTGROUP(),[Count]))
+```
+![image](https://github.com/user-attachments/assets/e8d64253-0fe8-41d7-ac22-f3b4be09be3c)
+
+## 27. How many customers have ordered only once?
+``` DAX
+EVALUATE
+FILTER(SUMMARIZE(Orders,Orders[CustomerID],"Count",COUNTROWS(Orders)),[Count]=1)
+```
+![image](https://github.com/user-attachments/assets/3a6aefe6-2dc7-48e9-8c4d-7e979679b995)
+
+## 28. What is the average number of products (not qty) per order?
+``` DAX
+EVALUATE
+GROUPBY(SUMMARIZE(Orders,Orders[OrderID],"Product Count",COUNT(Orders[ProductID])),"Average",AVERAGEX(CURRENTGROUP(),[Product Count]))
+```
+![image](https://github.com/user-attachments/assets/98a17cbe-f751-4cc5-9bf3-e07c39efbb71)
+
+## 29. What is the order value in $ of open orders? (Not shipped yet)
+``` DAX
+EVALUATE
+GROUPBY(SUMMARIZE(Orders,Orders[OrderID],"Product Count",COUNT(Orders[ProductID])),"Average",AVERAGEX(CURRENTGROUP(),[Product Count]))
+```
+![image](https://github.com/user-attachments/assets/a797b13d-538c-48b6-920f-d9dc5030ac3c)
+
+## 30. Average sales per transaction (orderID) for "Romero y Tomillo"?
+``` DAX
+EVALUATE
+GROUPBY(SELECTCOLUMNS(FILTER(CROSSJOIN(Customers,Orders),Orders[CustomerID]==Customers[CustomerID] && Customers[CompanyName]=="Romero y Tomillo")
+,Orders[OrderID],Orders[_Sales]),Orders[OrderID],"Average Sales",AVERAGEX(CURRENTGROUP(),Orders[_Sales]))
+```
+![image](https://github.com/user-attachments/assets/e506a0d3-117b-4ed0-a975-cdaaad4e59ae)
 
